@@ -1,0 +1,424 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Sherly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Pacifico&family=Quicksand:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 100%);
+            color: #4a4a4a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+            color: #d4789c;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .greeting {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: #b85c7e;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-family: 'Quicksand', sans-serif;
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: #fff;
+            border: 2px solid #f0d0e0;
+            border-radius: 12px;
+            color: #555;
+            font-size: 1.3rem;
+            font-family: 'Dancing Script', cursive;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            border-color: #d4789c;
+            box-shadow: 0 0 15px rgba(212, 120, 156, 0.3);
+        }
+
+        .hint {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 8px;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .option-btn {
+            padding: 15px 30px;
+            background: #fff;
+            border: 2px solid #f0d0e0;
+            color: #777;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+        }
+
+        .option-btn:hover {
+            background: #fff5f7;
+            border-color: #d4789c;
+            color: #d4789c;
+            transform: scale(1.02);
+        }
+
+        .option-btn.selected {
+            background: #ffeef8;
+            border-color: #d4789c;
+            color: #b85c7e;
+            font-weight: 700;
+        }
+
+        .proceed-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: #d4789c;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-family: 'Pacifico', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(212, 120, 156, 0.3);
+        }
+
+        .proceed-btn:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 6px 20px rgba(212, 120, 156, 0.4);
+        }
+
+        .proceed-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error {
+            font-family: 'Quicksand', sans-serif;
+            color: #b85c7e;
+            margin-top: 15px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: 600;
+        }
+
+        .error.show {
+            opacity: 1;
+        }
+
+        .letter-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 20px;
+            text-align: left;
+            line-height: 2;
+        }
+
+        .letter-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .letter-container::-webkit-scrollbar-track {
+            background: #ffeef8;
+        }
+
+        .letter-container::-webkit-scrollbar-thumb {
+            background: #f0d0e0;
+            border-radius: 4px;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0d0e0;
+        }
+
+        .letter-content {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: #444;
+            white-space: pre-wrap;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .letter-content p {
+            margin-bottom: 25px;
+        }
+
+        .highlight {
+            color: #b85c7e;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .music-player {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 16px;
+            border: 2px solid #f0d0e0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .music-label {
+            font-family: 'Pacifico', cursive;
+            font-size: 1rem;
+            color: #d4789c;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden-input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .emoji {
+            font-size: 2.5rem;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Step 1: Login -->
+    <div class="step active" id="step1">
+        <div class="greeting">Hi Sherly. It's me Pether <span class="emoji">😔</span></div>
+        <p class="subtitle">Please enter the password to continue</p>
+        
+        <input type="password" id="password" placeholder="Password...">
+        <p class="hint">Hint: the first nickname you gave me</p>
+        
+        <button class="proceed-btn" onclick="checkLogin()">Enter</button>
+        <p class="error" id="error1"></p>
+    </div>
+
+    <!-- Step 2: Question 1 -->
+    <div class="step" id="step2">
+        <h1>Question 1</h1>
+        <p class="subtitle">Where did we first meet?</p>
+        
+        <div class="options">
+            <button class="option-btn" onclick="selectOption(this, 'facebook')">Facebook</button>
+            <button class="option-btn" onclick="selectOption(this, 'tiktok')">TikTok</button>
+            <button class="option-btn" onclick="selectOption(this, 'whatsapp')">WhatsApp</button>
+            <button class="option-btn" onclick="selectOption(this, 'instagram')">Instagram</button>
+        </div>
+        
+        <input type="text" id="q1-answer" class="hidden-input">
+        <button class="proceed-btn" id="btn1" onclick="checkQ1()" disabled>Proceed</button>
+        <p class="error" id="error2">That's not quite right...</p>
+    </div>
+
+    <!-- Step 3: Question 2 -->
+    <div class="step" id="step3">
+        <h1>Question 2</h1>
+        <p class="subtitle">What is your native name?</p>
+        
+        <input type="text" id="native-name" placeholder="Type your answer...">
+        
+        <button class="proceed-btn" onclick="checkQ2()">Unlock</button>
+        <p class="error" id="error3">Incorrect. Try again.</p>
+    </div>
+
+    <!-- Step 4: The Letter -->
+    <div class="step" id="step4">
+        <div class="letter-container">
+            <div class="letter-header">
+                <h1>For Sherly</h1>
+                <p class="subtitle">From someone who misses you</p>
+            </div>
+
+            <div class="music-player">
+                <div class="music-label">Now Playing</div>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5UVJybNgRKoIkegkEipqfQ?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+
+            <div class="letter-content fade-in">
+                <p>Sherly,</p>
+
+                <p>I've stared at this empty screen for hours, trying to find the right words to bridge the distance I created. The truth is, there are no perfect words--only honest ones.</p>
+
+                <p>I asked you to stop talking to me. I built that wall with my own hands, brick by brick, thinking distance would make things easier. I was wrong. So painfully wrong. In trying to protect myself, I hurt the one person who never deserved it.</p>
+
+                <p>You were my constant--my <span class="highlight">3 AM conversations</span>, my laughter when nothing was funny, the person who saw me when I felt invisible. And I threw that away because I was scared, confused, or maybe just foolish. I told myself it was for the best, but "best" has never felt this empty.</p>
+
+                <p>I miss your voice. I miss how you say my name. I miss the way you could read my silences and know exactly what I needed to hear. Most of all, I miss having you in my corner, knowing that no matter how dark things got, Sherly was there.</p>
+
+                <p>They say pride comes before a fall. I fell hard, Odosa. And as I lay here in the quiet of my own making, I realize that <span class="highlight">I am sorry</span> doesn't even begin to cover it--but it's where I have to start. I am sorry for the silence. I am sorry for the walls. I am sorry for choosing fear over us.</p>
+
+                <p>You once told me that real friendship survives the storms. I hope that's still true. I hope there's still a place in your heart for someone who is learning, slowly, that pushing people away is never the answer.</p>
+
+                <p>If you're reading this, it means you remembered. You remembered where we started, who you are to me, and maybe--just maybe--you're willing to entertain the thought of starting again.</p>
+
+                <p>I don't expect forgiveness today. I don't expect anything, really. But I needed you to know that the door I closed? I've been standing on the other side of it, hoping you'd knock.</p>
+
+                <p>Take your time. I'll be here.</p>
+
+                <p style="margin-top: 40px; text-align: right;">
+                   <br>
+                    Pether
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let selectedAnswer = '';
+    let passwordAttempts = 0;
+
+    function showStep(stepNum) {
+        document.querySelectorAll('.step').forEach(step => {
+            step.classList.remove('active');
+        });
+        document.getElementById('step' + stepNum).classList.add('active');
+    }
+
+    function checkLogin() {
+        const password = document.getElementById('password').value.trim().toLowerCase();
+        const error = document.getElementById('error1');
+
+        if (password === 'cupcake') {
+            error.classList.remove('show');
+            passwordAttempts = 0;
+            showStep(2);
+        } else {
+            passwordAttempts++;
+            error.classList.add('show');
+            
+            if (passwordAttempts < 3) {
+                error.textContent = "Ohh you forgot, try again";
+            } else {
+                error.textContent = "It's fine if you forgot, the password is 'cupcake'";
+            }
+        }
+    }
+
+    function selectOption(btn, value) {
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedAnswer = value;
+        document.getElementById('q1-answer').value = value;
+        document.getElementById('btn1').disabled = false;
+    }
+
+    function checkQ1() {
+        const error = document.getElementById('error2');
+        if (selectedAnswer === 'facebook') {
+            error.classList.remove('show');
+            showStep(3);
+        } else {
+            error.classList.add('show');
+        }
+    }
+
+    function checkQ2() {
+        const answer = document.getElementById('native-name').value.trim().toLowerCase();
+        const error = document.getElementById('error3');
+        
+        if (answer === 'odosa') {
+            error.classList.remove('show');
+            showStep(4);
+        } else {
+            error.classList.add('show');
+        }
+    }
+
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const activeStep = document.querySelector('.step.active');
+            if (activeStep.id === 'step1') checkLogin();
+            else if (activeStep.id === 'step2' && selectedAnswer) checkQ1();
+            else if (activeStep.id === 'step3') checkQ2();
+        }
+    });
+</script>
+
+</body>
+</html>
