@@ -1,7 +1,14 @@
-{NAME: SHERLY APOLOGY}.
 
-{WEBSITE: https://sherlyapology.vercel.app }.
+# Sherly Apology
 
-{DEVELOPER: VICTOR PETHER}.
+A dedicated web application developed to convey a sincere, personalized apology. 
 
-{WEBSITE WILL BE UPDATED WHEN ITS BEEN HOSTED}
+# Live Demo
+You can view the live project here: [sherlyapology.vercel.app](https://sherlyapology.vercel.app)
+
+# Project Details
+* **Developer:** Victor Pether
+* **Deployment Platform:** Vercel
+
+
+*Built with care.*
