@@ -1,6 +1,6 @@
 {NAME: SHERLY APOLOGY}.
 
-{WEBSITE:sherlyapology.vercel.app }.
+{WEBSITE: sherlyapology.vercel.app }.
 
 {DEVELOPER: VICTOR PETHER}.
 
